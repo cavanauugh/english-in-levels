@@ -12,14 +12,14 @@ const { title = site.name, description = site.subtitle } = Astro.props;
   <title>{title} | {site.name}</title>
 </head>
 <body>
-  <header class="container navbar" style="background:transparent">
+  <div style="background:#172f62"><header class="container navbar">
     <a href="/" class="brand" aria-label="English in Levels - Início">✦ English<span>inLevels</span></a>
     <nav class="navlinks" aria-label="Menu principal">
       <a href="/">Início</a>
       <a href="/leituras/">Leituras</a>
       <a href="/sobre/">Sobre nós</a>
     </nav>
-  </header>
+  </header></div>
   <main><slot /></main>
   <footer class="footer">
     <div class="container footer-inner">
