@@ -1,0 +1,116 @@
+---
+import Base from '../../layouts/Base.astro';
+const modules = import.meta.glob('../../content/leituras/*.json', { eager: true });
+const readings=Object.values(modules).map(x=>x.default);
+export function getStaticPaths(){
+ const modules=import.meta.glob('../../content/leituras/*.json',{eager:true});
+ return Object.values(modules).map(x=>({params:{slug:x.default.slug},props:{lesson:x.default}}));
+}
+const { lesson } = Astro.props;
+---
+<Base title={lesson.title} description={lesson.excerpt}>
+  <section class="inner-hero"><div class="container"><a href="/leituras/" style="color:#c8e6ff">← Voltar para as leituras</a><div class="eyebrow" style="margin-top:20px">{lesson.category} · {lesson.date}</div><h1>{lesson.title}</h1><p>{lesson.titlePt}</p></div></section>
+  <section class="section"><div class="container lesson-shell">
+    <article class="lesson-box" id="lesson" data-levels={JSON.stringify(lesson.levels)}>
+      <div class="small-label">Escolha seu nível</div>
+      <div class="level-options" role="group" aria-label="Nível de inglês">
+        <button class="level-button" data-level="1" aria-pressed="true">Level 1 · Beginner</button>
+        <button class="level-button" data-level="2" aria-pressed="false">Level 2 · Intermediate</button>
+        <button class="level-button" data-level="3" aria-pressed="false">Level 3 · Advanced</button>
+      </div>
+      <div class="small-label" id="current-level">Level 1 · Beginner</div>
+      <h2>Read the story</h2>
+      <div id="reading-text" class="prose">{lesson.levels['1'].paragraphs.map(p=><p>{p}</p>)}</div>
+      <div class="audio-panel">
+        <h3>🎧 Listen & Read</h3>
+        <audio id="lesson-audio" controls preload="none" hidden aria-label="Narração em inglês"></audio>
+        <div id="voice-controls"><div class="audio-controls">
+          <button id="play" class="btn" type="button">▶ Play</button>
+          <button id="pause" class="level-button" type="button">Ⅱ Pause</button>
+          <button id="restart" class="level-button" type="button">↻ Restart</button>
+        </div><p class="muted" id="voice-status" aria-live="polite">Áudio demonstrativo pela voz do navegador. Para produção, recomendamos narrações pré-gravadas.</p></div>
+        <div class="small-label" style="margin-top:15px">Velocidade do áudio</div>
+        <div class="speed-options" role="group" aria-label="Velocidade do áudio">
+          <button class="speed-button" data-speed="0.5" aria-pressed="false">0,5×</button>
+          <button class="speed-button" data-speed="1" aria-pressed="true">1×</button>
+          <button class="speed-button" data-speed="1.5" aria-pressed="false">1,5×</button>
+          <button class="speed-button" data-speed="2" aria-pressed="false">2×</button>
+        </div>
+      </div>
+      <hr class="divider" />
+      <div class="small-label">Pratique novas palavras</div><h2>Useful Vocabulary</h2><div id="vocabulary" class="vocab"></div>
+      <hr class="divider" />
+      <div class="small-label">Compreenda a história</div><h2>Check Your Understanding</h2><p class="muted">Responda às perguntas e descubra se compreendeu a leitura. Não é necessário cadastro.</p>
+      <form id="quiz"></form><button id="check" class="btn" type="button" style="margin-top:18px">Verificar respostas</button><p id="result" aria-live="polite"></p>
+      <p class="page-note" style="margin-top:28px">{lesson.disclaimer}</p>
+    </article>
+    <aside>
+      <div class="sidebar-box">
+        <div class="small-label">Uma história em imagens</div><h2>Comic Strip</h2>
+        {lesson.cover && <img src={lesson.cover} alt="Quatro cenas ilustradas sobre o tema" style="width:100%;border-radius:13px;display:block;margin:12px 0" onerror="this.style.display='none'"/>}
+        <p class="muted">Observe as cenas e veja como cada uma se conecta à leitura.</p>
+        {lesson.comic.map((scene,index)=><p style="line-height:1.6;font-size:.93rem"><strong>Scene {index+1}.</strong> {scene.caption}</p>)}
+      </div>
+      <div class="sidebar-box" style="margin-top:22px"><h2>Como estudar?</h2>
+        <p class="muted">1. Observe o gibi e imagine a história.</p><p class="muted">2. Leia o texto e escute a narração.</p><p class="muted">3. Troque de nível quando quiser.</p><p class="muted">4. Revise o vocabulário e responda às perguntas.</p>
+      </div>
+    </aside>
+  </div></section>
+  <script>
+    const root=document.querySelector('#lesson');
+    if(root){
+      const levels=JSON.parse(root.dataset.levels);
+      let level='1',speed=1,speech=null;
+      const audio=document.querySelector('#lesson-audio');
+      const voiceControls=document.querySelector('#voice-controls');
+      const status=document.querySelector('#voice-status');
+      const synth=typeof window!=='undefined' ? window.speechSynthesis : null;
+      const supportsVoice=!!synth;
+      const escapeHTML=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+      const stopSpeech=()=>{if(synth)synth.cancel();speech=null};
+      const prepareSpeech=()=>{if(!supportsVoice)return null;const u=new SpeechSynthesisUtterance(levels[level].paragraphs.join(' '));u.lang='en-US';u.rate=speed;u.onend=()=>{speech=null;status.textContent='Narração concluída.'};u.onerror=()=>{speech=null;status.textContent='A narração não está disponível neste navegador.'};return u};
+      function update(){
+        stopSpeech();audio.pause();
+        const data=levels[level];
+        document.querySelectorAll('[data-level]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.level===level)));
+        document.querySelector('#current-level').textContent='Level '+level+' · '+data.label;
+        document.querySelector('#reading-text').innerHTML=data.paragraphs.map(p=>'<p>'+escapeHTML(p)+'</p>').join('');
+        document.querySelector('#vocabulary').innerHTML=data.vocabulary.map(([en,pt])=>'<div><strong>'+escapeHTML(en)+'</strong><span>'+escapeHTML(pt)+'</span></div>').join('');
+        document.querySelector('#quiz').innerHTML=data.questions.map((q,i)=>'<div class="quiz-item"><p>'+(i+1)+'. '+escapeHTML(q.question)+'</p>'+q.options.map((opt,j)=>'<label><input type="radio" name="q'+i+'" value="'+j+'"> '+escapeHTML(opt)+'</label>').join('')+'<div id="answer-'+i+'" class="answer" aria-live="polite"></div></div>').join('');
+        document.querySelector('#result').textContent='';
+        if(data.audio){audio.src=data.audio;audio.hidden=false;voiceControls.hidden=true;audio.playbackRate=speed;}
+        else{audio.removeAttribute('src');audio.load();audio.hidden=true;voiceControls.hidden=false;status.textContent=supportsVoice?'Áudio demonstrativo pela voz do navegador; pausa e retomada podem variar conforme o dispositivo.':'Seu navegador não oferece narração automática.';}
+      }
+      document.querySelectorAll('[data-level]').forEach(b=>b.addEventListener('click',()=>{level=b.dataset.level;update()}));
+      document.querySelectorAll('[data-speed]').forEach(b=>b.addEventListener('click',()=>{
+        speed=Number(b.dataset.speed);document.querySelectorAll('[data-speed]').forEach(k=>k.setAttribute('aria-pressed',String(k===b)));
+        audio.playbackRate=speed;
+        if(synth&&speech){const wasSpeaking=synth.speaking;stopSpeech();status.textContent=wasSpeaking?'A velocidade mudou. Inicie novamente a narração demonstrativa.':'Velocidade ajustada.'}
+      }));
+      document.querySelector('#play').addEventListener('click',()=>{
+        if(!supportsVoice){status.textContent='Narração não suportada neste dispositivo.';return;}
+        if(synth.paused){synth.resume();status.textContent='Narração retomada.';return;}
+        if(synth.speaking)return;
+        speech=prepareSpeech();if(speech){synth.speak(speech);status.textContent='Reproduzindo áudio em inglês.'}
+      });
+      document.querySelector('#pause').addEventListener('click',()=>{
+        if(!supportsVoice)return;
+        if(synth.paused){synth.resume();status.textContent='Narração retomada.'}
+        else if(synth.speaking){synth.pause();status.textContent='Narração pausada.'}
+      });
+      document.querySelector('#restart').addEventListener('click',()=>{stopSpeech();status.textContent='Reiniciado. Clique Play para ouvir novamente.'});
+      document.querySelector('#check').addEventListener('click',()=>{
+        let correct=0;levels[level].questions.forEach((q,i)=>{
+          const chosen=document.querySelector('input[name="q'+i+'"]:checked');
+          const ok=chosen&&Number(chosen.value)===q.answer;
+          if(ok)correct++;
+          const el=document.querySelector('#answer-'+i);el.className='answer '+(ok?'good':'bad');el.textContent=(ok?'✓ Correto! ':'Resposta: '+q.options[q.answer]+'. ')+q.explanation;
+        });
+        document.querySelector('#result').textContent='Você acertou '+correct+' de '+levels[level].questions.length+' perguntas.';
+      });
+      document.addEventListener('visibilitychange',()=>{if(document.hidden&&!audio.hidden)audio.pause()});
+      window.addEventListener('pagehide',()=>{stopSpeech();audio.pause()});
+      update();
+    }
+  </script>
+</Base>
