@@ -1,0 +1,21 @@
+---
+import Base from '../../layouts/Base.astro';
+const modules=import.meta.glob('../../content/leituras/*.json',{eager:true});
+const readings=Object.values(modules).map(x=>x.default).sort((a,b)=>b.date.localeCompare(a.date));
+---
+<Base title="Leituras">
+  <section class="inner-hero"><div class="container"><div class="eyebrow">Biblioteca</div><h1>Leituras para cada momento</h1><p>Explore os assuntos publicados e pratique no nível ideal para você.</p></div></section>
+  <section class="section"><div class="container">
+    <label for="busca" class="small-label">Encontre um assunto</label><div><input class="search-input" id="busca" placeholder="Busque por título ou categoria..." type="search" /></div>
+    <div class="reading-grid" id="lista">
+      {readings.map(item=><article class="reading-card" data-search={`${item.title} ${item.titlePt} ${item.category}`.toLowerCase()}>
+        <div class="reading-cover"><img src={item.cover} alt="Capa ilustrada" loading="lazy" onerror="this.style.display='none'"/></div>
+        <div class="reading-body"><div class="tags"><span class="tag">{item.category}</span><span class="tag mint">3 níveis</span></div><h3>{item.title}</h3><p>{item.excerpt}</p><a class="card-link" href={`/leituras/${item.slug}/`}>Estudar agora →</a></div>
+      </article>)}
+    </div><p id="vazio" hidden>Nenhuma leitura encontrada.</p>
+  </div></section>
+  <script>
+    const field=document.querySelector('#busca');
+    field?.addEventListener('input',()=>{let count=0;document.querySelectorAll('[data-search]').forEach(el=>{const match=el.dataset.search.includes(field.value.trim().toLowerCase());el.hidden=!match;if(match)count++});document.querySelector('#vazio').hidden=count!==0});
+  </script>
+</Base>
