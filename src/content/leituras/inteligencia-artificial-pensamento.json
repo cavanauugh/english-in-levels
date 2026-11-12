@@ -1,0 +1,219 @@
+{
+  "slug": "inteligencia-artificial-pensamento",
+  "title": "Can AI Change How We Think?",
+  "titlePt": "A inteligência artificial pode mudar a forma como pensamos?",
+  "category": "Tecnologia",
+  "date": "2026-11-12",
+  "excerpt": "Descubra como a inteligência artificial pode apoiar nossos estudos sem substituir o pensamento crítico.",
+  "cover": "/imagens/gibi-ia.png",
+  "sources": [],
+  "disclaimer": "Leitura educativa original de demonstração. Não é uma reportagem nem apresenta conclusões científicas definitivas.",
+  "comic": [
+    {
+      "caption": "Lucas uses AI to explore a question."
+    },
+    {
+      "caption": "He stops to think about the answer."
+    },
+    {
+      "caption": "Lucas checks information and writes his own ideas."
+    },
+    {
+      "caption": "Technology helps him, but he thinks for himself."
+    }
+  ],
+  "levels": {
+    "1": {
+      "label": "Beginner",
+      "audio": "",
+      "paragraphs": [
+        "Artificial intelligence, or AI, is part of our daily lives. Many people use AI to study, work, and find answers. It can help us learn new things and save time.",
+        "Some people worry about using AI too much. When we ask AI to do everything, we may spend less time thinking and solving problems ourselves.",
+        "Researchers are studying how AI affects our thinking skills. They do not know all the long-term effects. Using AI does not automatically make our brains weaker.",
+        "AI can be a useful tool for learning. We can ask questions, check answers, and think about what we read. The important thing is to keep using our own minds."
+      ],
+      "vocabulary": [
+        [
+          "daily lives",
+          "vida cotidiana"
+        ],
+        [
+          "worry",
+          "preocupar-se"
+        ],
+        [
+          "ourselves",
+          "nós mesmos"
+        ],
+        [
+          "researchers",
+          "pesquisadores"
+        ],
+        [
+          "useful",
+          "útil"
+        ]
+      ],
+      "questions": [
+        {
+          "question": "What can AI help people do?",
+          "options": [
+            "Learn new things",
+            "Stop learning",
+            "Avoid all questions"
+          ],
+          "answer": 0,
+          "explanation": "The text says AI can help us learn new things."
+        },
+        {
+          "question": "Do researchers know all long-term effects?",
+          "options": [
+            "Yes",
+            "No",
+            "The text does not mention research"
+          ],
+          "answer": 1,
+          "explanation": "Researchers still do not know all the long-term effects."
+        },
+        {
+          "question": "What should we keep doing?",
+          "options": [
+            "Using our own minds",
+            "Believing every answer",
+            "Never asking questions"
+          ],
+          "answer": 0,
+          "explanation": "The text encourages independent thinking."
+        }
+      ]
+    },
+    "2": {
+      "label": "Intermediate",
+      "audio": "",
+      "paragraphs": [
+        "Artificial intelligence has become a familiar part of studying and working. It can explain difficult ideas, summarize information, and help people find answers more efficiently. However, relying on it for every task raises questions about how we learn.",
+        "Some educators are concerned that frequent dependence on AI could reduce opportunities to practice important skills, such as analyzing arguments, remembering information, and solving problems independently. This does not mean that every use of AI is harmful.",
+        "Researchers are still investigating how different patterns of AI use affect learning and critical thinking. The results may depend on the task, the person, and whether technology is used to support or replace active thinking.",
+        "A balanced approach can make AI more valuable. Students can compare sources, challenge suggestions, and write their own conclusions. In this way, technology becomes a study partner rather than a substitute for curiosity."
+      ],
+      "vocabulary": [
+        [
+          "relying on",
+          "depender de"
+        ],
+        [
+          "raises questions",
+          "levanta questões"
+        ],
+        [
+          "independently",
+          "de forma independente"
+        ],
+        [
+          "investigating",
+          "investigando"
+        ],
+        [
+          "substitute",
+          "substituto"
+        ]
+      ],
+      "questions": [
+        {
+          "question": "What is one concern about depending too much on AI?",
+          "options": [
+            "Less practice in independent thinking",
+            "More free books",
+            "Faster internet"
+          ],
+          "answer": 0,
+          "explanation": "Dependence can reduce opportunities to practice skills."
+        },
+        {
+          "question": "Are all forms of AI use described as harmful?",
+          "options": [
+            "Yes",
+            "No",
+            "Only at school"
+          ],
+          "answer": 1,
+          "explanation": "The passage explains that not every use is harmful."
+        },
+        {
+          "question": "What is a balanced way to use AI?",
+          "options": [
+            "Copy all answers",
+            "Compare sources and question suggestions",
+            "Avoid reading"
+          ],
+          "answer": 1,
+          "explanation": "It recommends checking sources and developing conclusions."
+        }
+      ]
+    },
+    "3": {
+      "label": "Advanced",
+      "audio": "",
+      "paragraphs": [
+        "As generative artificial intelligence becomes embedded in education and professional life, it offers unprecedented convenience while inviting a more nuanced examination of cognitive engagement. The central issue is not merely whether AI provides answers, but how its presence reshapes the process of reaching them.",
+        "One concern involves cognitive offloading: delegating mental tasks to external tools. Although offloading can be efficient and beneficial, excessive reliance may diminish opportunities to rehearse reasoning, evaluate evidence, or consolidate knowledge. Such outcomes are not inevitable, nor do they establish that AI use directly causes cognitive decline.",
+        "Current research continues to investigate the conditions under which AI-assisted learning strengthens or weakens particular skills. Individual habits, the difficulty of a task, instructional design, and the extent of active reflection may all influence the results. Strong causal conclusions require careful evidence.",
+        "Rather than rejecting these tools outright, learners can adopt deliberate strategies: formulate an initial hypothesis, interrogate generated responses, verify primary sources, and explain conclusions in their own words. Used thoughtfully, AI may expand intellectual possibilities while leaving human judgment firmly in control."
+      ],
+      "vocabulary": [
+        [
+          "unprecedented",
+          "sem precedentes"
+        ],
+        [
+          "cognitive offloading",
+          "terceirização de tarefas cognitivas"
+        ],
+        [
+          "diminish",
+          "reduzir"
+        ],
+        [
+          "causal conclusions",
+          "conclusões causais"
+        ],
+        [
+          "interrogate",
+          "questionar criticamente"
+        ]
+      ],
+      "questions": [
+        {
+          "question": "What is cognitive offloading?",
+          "options": [
+            "Delegating mental tasks to external tools",
+            "Learning a new language",
+            "Physical exercise"
+          ],
+          "answer": 0,
+          "explanation": "The passage defines it as delegating mental tasks."
+        },
+        {
+          "question": "Does the passage assert that AI inevitably causes decline?",
+          "options": [
+            "Yes",
+            "No",
+            "Only for adults"
+          ],
+          "answer": 1,
+          "explanation": "It explicitly states that outcomes are not inevitable."
+        },
+        {
+          "question": "Which approach best supports critical engagement?",
+          "options": [
+            "Accepting generated claims without checking",
+            "Developing hypotheses and verifying sources",
+            "Avoiding all technology"
+          ],
+          "answer": 1,
+          "explanation": "The passage recommends verification and reflection."
+        }
+      ]
+    }
+  }
+}
