@@ -1,0 +1,38 @@
+---
+import Base from '../layouts/Base.astro';
+import { site } from '../data/site.js';
+const modules = import.meta.glob('../content/leituras/*.json', { eager: true });
+const readings = Object.values(modules).map((x) => x.default).sort((a,b) => b.date.localeCompare(a.date));
+---
+<Base title="Início">
+  <section class="hero" style={`background-image: linear-gradient(110deg,rgba(9,30,73,.83),rgba(23,65,129,.48)),url("${site.heroImage}")`}>
+    <div class="container">
+      <div class="hero-content">
+        <div class="eyebrow">Inglês acessível, um dia de cada vez</div>
+        <h1>{site.slogan}</h1>
+        <p>{site.subtitle}</p>
+        <div class="hero-actions"><a class="btn light" href="#leituras">Explorar leituras ↓</a><a class="btn outline" href="/sobre/">Conheça nossa história</a></div>
+      </div>
+    </div>
+  </section>
+  <div class="container feature-strip">
+    <div><strong>📚 Três níveis</strong><p>Iniciante, intermediário e avançado. Escolha seu ritmo.</p></div>
+    <div><strong>🎧 Leia e escute</strong><p>Treine seu ouvido com velocidade ajustável.</p></div>
+    <div><strong>💬 Aprenda com histórias</strong><p>Gibis, palavras úteis e interpretação de texto.</p></div>
+  </div>
+  <section class="section" id="leituras">
+    <div class="container">
+      <div class="section-label">Conteúdos para descobrir</div>
+      <h2>Comece sua próxima leitura</h2>
+      <p class="section-intro">Assuntos escolhidos com cuidado para você praticar inglês e conhecer mais sobre o mundo. Sem cadastro e sem pressa.</p>
+      <div class="reading-grid">
+        {readings.map((item) => <article class="reading-card">
+          <div class="reading-cover"><img src={item.cover} alt="Ilustração do conteúdo" loading="lazy" onerror="this.style.display='none'"/></div>
+          <div class="reading-body"><div class="tags"><span class="tag">{item.category}</span><span class="tag mint">3 níveis</span></div><h3>{item.title}</h3><p>{item.excerpt}</p><a class="card-link" href={`/leituras/${item.slug}/`}>Ler e escutar →</a></div>
+        </article>)}
+      </div>
+      <p class="muted" style="margin-top:20px">Novas leituras são adicionadas pela criadora do projeto. A primeira é uma demonstração.</p>
+    </div>
+  </section>
+  <section class="section about-section"><div class="container about-content"><div class="section-label">O que nos move</div><h2>O inglês pode abrir portas. O aprendizado deve ser para todos.</h2><p>Este projeto nasceu de uma vontade real de aprender inglês e ajudar outras pessoas que também querem crescer. Cada leitura é mais uma chance de descobrir uma palavra, uma cultura ou uma possibilidade.</p><a class="btn" href="/sobre/">Leia nossa história</a></div></section>
+</Base>
